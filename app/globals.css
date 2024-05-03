@@ -4,36 +4,76 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-rgb: 0, 0, 0;
   }
 }
 
+/****************************************** 
+Estilos generales 
+*******************************************/
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply bg-background text-foreground
 }
 
+*{
+  border-color: rgb(var(--foreground-rgb));
+  @apply border-foreground;
+}
+th{
+  @apply font-semibold
+}
 .h1{
   @apply text-2xl md:text-4xl
 }
 
+.nav-links .link{
+  @apply text-sm
+}
 .nav-links .link.active{
   @apply underline
 }
 
+.header{
+  @apply w-full
+}
+.h-title{
+  @apply -tracking-wider
+}
+.svg-icon path{
+  @apply stroke-primary
+}
+
+/****************************************** 
+seccion aparato
+*******************************************/
 .aparato .cuadrante{
-  @apply border p-1 aspect-square justify-center items-center flex flex-col relative -ml-[1px]
+  @apply border p-1 aspect-square justify-center items-center flex flex-col relative -ml-[1px] -mb-[1px] transition-colors duration-100 hover:bg-foreground hover:text-background
+}
+
+/****************************************** 
+seccion año
+*******************************************/
+.ano .cuadrante{
+  @apply border p-3 justify-center items-center flex flex-col relative -ml-[1px] -mb-[1px]
+}
+.table td{
+  @apply border
+}
+.table .day{
+  @apply flex flex-col gap-1 p-2
+}
+.table .day .id{
+  @apply font-bold
+}
+.table .day .date{
+  @apply text-xs text-center
+}
+.table .day .negative{
+  @apply text-sm
 }

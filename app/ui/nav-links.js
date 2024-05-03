@@ -7,7 +7,7 @@ export function NavLinks() {
   const pathname = usePathname()
  
   return (
-    <nav className="absolute w-full p-3 nav-links">
+    <nav className="absolute right-3 p-3 nav-links">
       <ul className="flex gap-6 justify-end">
         <li><Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">Home</Link></li>
         <li><Link className={`link ${pathname.includes('/aparato') ? 'active' : ''}`} href="/aparato">Aparato</Link></li>

@@ -1,5 +1,9 @@
+import { Header } from '@/app/ui/header.js';
+
 export default function Home() {
   return (
-    <h1>Welcome</h1>
+    <>
+      <Header title="Calendaria" />
+    </>
   );
 }

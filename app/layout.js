@@ -15,8 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NavLinks />
-
-        <main className="flex min-h-screen flex-col items-center justify-center p-12 md:p-24 gap-12">
+        <main className="px-3">
         {children}
         </main>
       </body>
