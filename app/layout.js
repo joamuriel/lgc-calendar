@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NavLinks />
-        <main className="px-3">
+        <main className="px-3 py-2">
         {children}
         </main>
       </body>

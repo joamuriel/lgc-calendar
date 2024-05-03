@@ -1,13 +1,14 @@
 import { Header } from '@/app/ui/header.js';
 import { currentYear, years, groupedYears } from "@/app/services/dates"
 import Link from "next/link";
-import { startOfYear, endOfYear, eachDayOfInterval, isLeapYear } from 'date-fns';
+import { startOfYear, endOfYear, eachDayOfInterval, isLeapYear, getDayOfYear } from 'date-fns';
 
 // guardar todos los días de un año ??
 // tomar los 352 primeros días del año y divirlos en grupos de 16 días.
 // guardar en otra variable el resto de los días del año (13 dias si es un año de 365 y 14 días si es año bisiesto)
 
 export default function AnoItemPage({ params: {id} }) {
+
 
   // Obtener el primer y último día del año
   const startDate = startOfYear(new Date(parseInt(id), 0, 1));
@@ -24,10 +25,10 @@ export default function AnoItemPage({ params: {id} }) {
   for (let i = 0; i < first352Days.length; i += 16) {
     groupedDays.push(first352Days.slice(i, i + 16));
   }
-
   // Obtener el resto de los días del año
-  const leapYear = isLeapYear(parseInt(id));
+  const leapYear = isLeapYear(startDate);
   const restOfTheYear = leapYear ? allDaysOfYear.slice(352, 366) : allDaysOfYear.slice(352, 365);
+
 
   // Estas variables las hago para pasarlas al header
   const totalIds = years.length;
@@ -39,121 +40,184 @@ export default function AnoItemPage({ params: {id} }) {
   if (nextId > totalIds) {
     nextId = 1;
   }
-
   const prevLink = `/ano/${prevId}`
   const nextLink = `/ano/${nextId}`
 
   return(
     <>
     <Header title="Año" navigation={id} prev={prevLink} next={nextLink} />
-    <div className='gap-0 grid grid-cols-2 w-full ano mt-12 '>
+    <div className='gap-0 md:grid grid-cols-2 w-full ano mt-12 '>
       {/* Cuadrante NO */}
       <div className='cuadrante'>
-        <h1 className='h-title text-3xl'>NO <small>(Humano)</small></h1>
-        <table className='table table-auto w-full'>
+        <h1 className='h-title text-2xl md:text-3xl'>NO <small>(Humano)</small></h1>
+        <table className='table table-auto w-full mt-3'>
           <thead>
             <tr>
-              <th className='text-right px-3 text-sm w-12'>Vuelta</th>
-              <th className='bg-foreground text-background border'>Lógica</th>
-              <th className='bg-foreground text-background border'>Inhumano</th>
-              <th className='bg-foreground text-background border'>Humano</th>
-              <th className='bg-foreground text-background border'>Contexto</th>
+              <th className='th-vuelta'>Vuelta</th>
+              <th className='th'>Lógica</th>
+              <th className='th'>Inhumano</th>
+              <th className='th'>Humano</th>
+              <th className='th'>Contexto</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th className='text-right px-3 text-sm'>2</th>
-              <td>
-                <div className='day'>
-                  <div className='flex w-full justify-between'>
-                    <p className='id'>9</p>
-                    <p className='negative'>-357</p>
-                  </div>
-                  <p className='date'>Martes 09/01</p>
-                </div>
-              </td>
-              <td>
-                <div className='day'>
-                  <div className='flex w-full justify-between'>
-                    <p className='id'>10</p>
-                    <p className='negative'>-356</p>
-                  </div>
-                  <p className='date'>Miércoles 10/01</p>
-                </div>
-              </td>
-              <td>
-                <div className='day'>
-                  <div className='flex w-full justify-between'>
-                    <p className='id'>11</p>
-                    <p className='negative'>-355</p>
-                  </div>
-                  <p className='date'>Jueves 11/01</p>
-                </div>
-              </td>
-              <td>
-                <div className='day'>
-                  <div className='flex w-full justify-between'>
-                    <p className='id'>12</p>
-                    <p className='negative'>-354</p>
-                  </div>
-                  <p className='date'>Viernes 12/01</p>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th className='text-right px-3 text-sm'>1</th>
-              <td>
-                <div className='day'>
-                  <div className='flex w-full justify-between'>
-                    <p className='id'>9</p>
-                    <p className='negative'>-357</p>
-                  </div>
-                  <p className='date'>Martes 09/01</p>
-                </div>
-              </td>
-              <td>
-                <div className='day'>
-                  <div className='flex w-full justify-between'>
-                    <p className='id'>10</p>
-                    <p className='negative'>-356</p>
-                  </div>
-                  <p className='date'>Miércoles 10/01</p>
-                </div>
-              </td>
-              <td>
-                <div className='day'>
-                  <div className='flex w-full justify-between'>
-                    <p className='id'>11</p>
-                    <p className='negative'>-355</p>
-                  </div>
-                  <p className='date'>Jueves 11/01</p>
-                </div>
-              </td>
-              <td>
-                <div className='day'>
-                  <div className='flex w-full justify-between'>
-                    <p className='id'>12</p>
-                    <p className='negative'>-354</p>
-                  </div>
-                  <p className='date'>Viernes 12/01</p>
-                </div>
-              </td>
-            </tr>
+            {/* vueltas */}
+            {groupedDays.slice().reverse().map((group, groupIndex) => (
+              <tr key={groupIndex}>
+                <th className='th-vuelta'>{23 - groupIndex - 1}</th>
+                {group.slice(8, 12).map((day, dayIndex) => (
+                  <td key={dayIndex} className={`vuelta-${23 - groupIndex - 1}`}>
+                    <div className='day'>
+                      <div className='day-numbers'>
+                        <p className='id'>{getDayOfYear(day)}</p>
+                        <p className='negative'>-{(leapYear ? 366 : 365) - (getDayOfYear(day))}</p>
+                      </div>
+                      <p className='date'>{day.toLocaleDateString('es-ES', { weekday: 'long', day: '2-digit', month: '2-digit' })}</p>
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))}
+            
           </tbody>
         </table>
       </div>
       {/* Cuadrante NE */}
       <div className='cuadrante'>
-      <h1 className='h-title text-3xl'>NE <small>(Inhumano)</small></h1>
+      <h1 className='h-title text-2xl md:text-3xl'>NE <small>(Inhumano)</small></h1>
+      <table className='table table-auto w-full mt-3'>
+          <thead>
+            <tr>
+              <th className='th'>Lógica</th>
+              <th className='th'>Inhumano</th>
+              <th className='th'>Humano</th>
+              <th className='th'>Contexto</th>
+              <th className='th-vuelta'>Vuelta</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* vueltas */}
+            {groupedDays.slice().reverse().map((group, groupIndex) => (
+              <tr key={groupIndex}>
+                {group.slice(4, 8).map((day, dayIndex) => (
+                  <td key={dayIndex} className={`vuelta-${23 - groupIndex - 1}`}>
+                    <div className='day'>
+                    <div className='day-numbers'>
+                        <p className='id'>{getDayOfYear(day)}</p>
+                        <p className='negative'>-{(leapYear ? 366 : 365) - (getDayOfYear(day))}</p>
+                      </div>
+                      <p className='date'>{day.toLocaleDateString('es-ES', { weekday: 'long', day: '2-digit', month: '2-digit' })}</p>
+                    </div>
+                  </td>
+                ))}
+                <th className='th-vuelta'>{23 - groupIndex - 1}</th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       {/* Cuadrante SO */}
       <div className='cuadrante'>
-        <h1 className='h-title text-3xl'>SO <small>(Lógica)</small></h1>
+      <h1 className='h-title text-2xl md:text-3xl mb-3 md:hidden block'>SO <small>(Lógica)</small></h1>
+        <table className='table table-auto w-full'>
+          <thead className='md:hidden table-header-group'>
+            <tr>
+              <th className='th-vuelta'></th>
+              <th className='th'>Lógica</th>
+              <th className='th'>Inhumano</th>
+              <th className='th'>Humano</th>
+              <th className='th'>Contexto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* vueltas */}
+            {groupedDays.map((group, groupIndex) => (
+              <tr key={groupIndex}>
+                <th className='th-vuelta'>{groupIndex + 1}</th>
+                {group.slice(0, 4).map((day, dayIndex) => (
+                  <td key={dayIndex} className={`vuelta-${groupIndex + 1}`}>
+                    <div className='day'>
+                    <div className='day-numbers'>
+                        <p className='id'>{getDayOfYear(day)}</p>
+                        <p className='negative'>-{(leapYear ? 366 : 365) - (getDayOfYear(day))}</p>
+                      </div>
+                      <p className='date'>{day.toLocaleDateString('es-ES', { weekday: 'long', day: '2-digit', month: '2-digit' })}</p>
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+          <tfoot className='hidden md:table-footer-group'>
+            <tr>
+              <th className='th-vuelta'></th>
+              <th className='th'>Lógica</th>
+              <th className='th'>Inhumano</th>
+              <th className='th'>Humano</th>
+              <th className='th'>Contexto</th>
+            </tr>
+          </tfoot>
+        </table>
+        <h1 className='h-title text-2xl md:text-3xl mt-3 hidden md:block'>SO <small>(Lógica)</small></h1>
       </div>
       {/* Cuadrante SE */}
       <div className='cuadrante'>
-        <h1 className='h-title text-3xl'>SE <small>(Contexto)</small></h1>
+      <h1 className='h-title text-2xl md:text-3xl mb-3 block md:hidden'>SE <small>(Contexto)</small></h1>
+        <table className='table table-auto w-full'>
+          <thead className='md:hidden table-header-group'>
+            <tr>
+              <th className='th'>Lógica</th>
+              <th className='th'>Inhumano</th>
+              <th className='th'>Humano</th>
+              <th className='th'>Contexto</th>
+              <th className='th-vuelta'></th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* vueltas */}
+            {groupedDays.map((group, groupIndex) => (
+              <tr key={groupIndex}>
+                {group.slice(12, 16).map((day, dayIndex) => (
+                  <td key={dayIndex} className={`vuelta-${groupIndex + 1}`}>
+                    <div className='day'>
+                    <div className='day-numbers'>
+                        <p className='id'>{getDayOfYear(day)}</p>
+                        <p className='negative'>-{(leapYear ? 366 : 365) - (getDayOfYear(day))}</p>
+                      </div>
+                      <p className='date'>{day.toLocaleDateString('es-ES', { weekday: 'long', day: '2-digit', month: '2-digit' })}</p>
+                    </div>
+                  </td>
+                ))}
+                <th className='th-vuelta'>{groupIndex + 1}</th>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot className='hidden md:table-footer-group'>
+            <tr>
+              <th className='th'>Lógica</th>
+              <th className='th'>Inhumano</th>
+              <th className='th'>Humano</th>
+              <th className='th'>Contexto</th>
+              <th className='th-vuelta'></th>
+            </tr>
+          </tfoot>
+        </table>
+        <h1 className='h-title text-2xl md:text-3xl mt-3 hidden md:block'>SE <small>(Contexto)</small></h1>
       </div>
+    </div>
+    {/* Anillo de fuego */}
+    <div className='firering mt-12'>
+      {restOfTheYear.map((day, index) => (
+        <div className='firering-day'>
+          <div className='day'>
+            <div className='day-numbers'>
+              <p className='id'>{getDayOfYear(day)}</p>
+              <p className='negative'>-{(leapYear ? 366 : 365) - (getDayOfYear(day))}</p>
+            </div>
+            <p className='date'>{day.toLocaleDateString('es-ES', { weekday: 'long', day: '2-digit', month: '2-digit' })}</p>
+          </div>
+        </div>
+      ))}
     </div>
     </>
   )

@@ -11,8 +11,8 @@ export function NavLinks() {
       <ul className="flex gap-6 justify-end">
         <li><Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">Home</Link></li>
         <li><Link className={`link ${pathname.includes('/aparato') ? 'active' : ''}`} href="/aparato">Aparato</Link></li>
-        <li><Link className={`link ${pathname === '/ano' ? 'active' : ''}`} href="/ano">Año</Link></li>
-        <li>Vuelta</li>
+        <li><Link className={`link ${pathname.includes('/ano') ? 'active' : ''}`} href="/ano">Año</Link></li>
+        <li><Link className={`link ${pathname.includes('/vuelta') ? 'active' : ''}`} href="/vuelta">Vuelta</Link></li>
       </ul>
     </nav>
     

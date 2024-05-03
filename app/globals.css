@@ -38,7 +38,6 @@ th{
 .nav-links .link.active{
   @apply underline
 }
-
 .header{
   @apply w-full
 }
@@ -65,15 +64,39 @@ seccion año
 .table td{
   @apply border
 }
-.table .day{
-  @apply flex flex-col gap-1 p-2
+.table .day,
+.firering .day{
+  @apply flex flex-col gap-1 p-1 md:p-2
 }
-.table .day .id{
+.table .day .day-numbers,
+.firering .day .day-numbers{
+  @apply flex w-full justify-center md:justify-between flex-col md:flex-row text-center
+}
+.table .day .id,
+.firering .day .id{
   @apply font-bold
 }
-.table .day .date{
+.table .day .date,
+.firering .day .date{
   @apply text-xs text-center
 }
-.table .day .negative{
+.table .day .negative,
+.firering .day .negative{
   @apply text-sm
+}
+.table .th-vuelta{
+  @apply text-center text-xs w-12
+}
+.table .th{
+  @apply bg-foreground text-background border text-xs md:text-base 
+}
+.firering{
+  @apply flex flex-wrap;
+}
+.firering-day{
+  @apply border flex-1
+}
+[class^="vuelta-"]:hover,
+.firering-day:hover {
+  @apply bg-foreground text-background
 }
