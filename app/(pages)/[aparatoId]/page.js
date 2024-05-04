@@ -9,7 +9,6 @@ export default function AparatoItemPage({ params }) {
 
   // Obtener el año actual
   const currentYear = format(new Date(), 'yyyy');
-  console.log(currentYear)
 
   // Estas variables las hago para pasarlas al header
   const totalIds = groupedYears.length;

@@ -49,8 +49,6 @@ function isCurrentDate(day) {
   const prevLink = `/${params.aparatoId}/${prevId}`
   const nextLink = `/${params.aparatoId}/${nextId}`
 
-  console.log(params.aparatoId)
-
   return(
     <>
     <Header title="Año" navigation={params.anoId} prev={prevLink} next={nextLink} />
