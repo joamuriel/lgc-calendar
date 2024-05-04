@@ -1,9 +1,9 @@
-import { Inter } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { NavLinks } from "./ui/nav-links";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = DM_Sans({ subsets: ["latin"] });
 
 export const metadata = {
   title: "LGC Calendar",

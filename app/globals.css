@@ -54,6 +54,9 @@ seccion aparato
 .aparato .cuadrante{
   @apply border p-1 aspect-square justify-center items-center flex flex-col relative -ml-[1px] -mb-[1px] transition-colors duration-100 hover:bg-foreground hover:text-background
 }
+.aparato .cuadrante.today{
+  @apply bg-foreground text-background
+}
 
 /****************************************** 
 seccion año
@@ -94,9 +97,39 @@ seccion año
   @apply flex flex-wrap;
 }
 .firering-day{
-  @apply border flex-1
+  @apply border flex-1 transition-colors duration-100
 }
 [class^="vuelta-"]:hover,
 .firering-day:hover {
   @apply bg-foreground text-background
+}
+[class^="vuelta-"].today{
+  @apply bg-foreground text-background
+}
+/****************************************** 
+seccion vuelta
+*******************************************/
+.vuelta .cuadrante{
+  @apply border p-6 justify-center items-center flex flex-col relative -ml-[1px] -mb-[1px]
+}
+.vuelta .cuadrante .day-group{
+  @apply flex w-full
+}
+.vuelta .cuadrante .day-group .day{
+  @apply border p-3 flex-1 -mr-[1px] flex-col justify-center items-center text-center hover:bg-foreground hover:text-background transition-colors duration-100
+}
+.vuelta .cuadrante .day-group .day.today{
+  @apply bg-foreground text-background
+}
+.vuelta .cuadrante .day-group .day .weekday{
+  @apply uppercase text-xs md:text-sm
+}
+.vuelta .cuadrante .day-group .day .id{
+  @apply uppercase text-xs md:text-sm
+}
+.vuelta .cuadrante .day-group .day .date{
+  @apply font-semibold text-2xl md:text-4xl py-6
+}
+.vuelta .cuadrante .day-group .day .solar-day{
+  @apply uppercase text-xs
 }
