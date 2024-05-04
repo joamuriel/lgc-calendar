@@ -222,7 +222,7 @@ function isCurrentDate(day) {
     {/* Anillo de fuego */}
     <div className='firering mt-12'>
       {restOfTheYear.map((day, index) => (
-        <div className='firering-day'>
+        <div key={index} className='firering-day'>
           <div className='day'>
             <div className='day-numbers'>
               <p className='id'>{getDayOfYear(day)}</p>
