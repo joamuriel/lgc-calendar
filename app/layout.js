@@ -7,8 +7,8 @@ import { Footer } from "./ui/footer"
 const inter = DM_Sans({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "LGC Calendar",
-  description: "LGC Calendar",
+  title: "Calendaria",
+  description: "Calendario lógico según la LGC",
 };
 
 export default function RootLayout({ children }) {

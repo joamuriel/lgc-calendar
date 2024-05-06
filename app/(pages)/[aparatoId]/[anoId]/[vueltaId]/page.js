@@ -57,7 +57,7 @@ export default function VueltaItemPage({ params }) {
         </div>
 
         <div className='cuadrante order-2'>
-          <h3 className='absolute top-0.5 left-0 md:left-auto md:right-1 text-xs'>NE (Inhumano)</h3>
+          <h3 className='absolute top-0.5 left-1 md:left-auto md:right-1 text-xs'>NE (Inhumano)</h3>
           <div className='day-group'>
             {groupedDays[params.vueltaId - 1].slice(4, 8).map((day, dayIndex) => (
               <div key={dayIndex} className={`day ${isCurrentDate(day) ? 'today' : ''}`}>
