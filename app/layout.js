@@ -2,6 +2,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { NavLinks } from "./ui/nav-links";
+import { Footer } from "./ui/footer"
 
 const inter = DM_Sans({ subsets: ["latin"] });
 
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
         <NavLinks />
         <main className="px-3 py-2">
         {children}
+        <Footer />
         </main>
       </body>
     </html>

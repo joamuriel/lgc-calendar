@@ -19,6 +19,9 @@ module.exports = {
       colors: {
         'primary': 'rgb(var(--foreground-rgb))',
       },
+      fontSize: {
+        xxs: ['0.6rem', '1rem']
+      }
     },
   },
   plugins: [],

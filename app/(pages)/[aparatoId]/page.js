@@ -1,14 +1,11 @@
 import { Header } from '@/app/ui/header.js';
-import { groupedYears } from "@/app/services/dates"
+import { groupedYears, currentYear } from "@/app/services/dates"
 import Link from "next/link";
 import { format } from 'date-fns';
 
 
 export default function AparatoItemPage({ params }) {
   const aparato = groupedYears[params.aparatoId - 1]
-
-  // Obtener el año actual
-  const currentYear = format(new Date(), 'yyyy');
 
   // Estas variables las hago para pasarlas al header
   const totalIds = groupedYears.length;

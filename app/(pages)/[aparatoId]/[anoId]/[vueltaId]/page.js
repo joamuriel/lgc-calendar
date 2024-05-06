@@ -1,20 +1,27 @@
 import { Header } from '@/app/ui/header.js';
 import { startOfYear, endOfYear, eachDayOfInterval, isLeapYear } from 'date-fns';
-import { startFirstDate } from "@/app/services/dates"
+import { today, calculateYearDays } from "@/app/services/dates"
 import Link from "next/link";
 
 export default function VueltaItemPage({ params }) {
 
-  const startDate = startOfYear(new Date(parseInt(params.anoId), 0, 1));
-  const endDate = endOfYear(new Date(parseInt(params.anoId), 11, 31));
-  const allDaysOfYear = eachDayOfInterval({ start: startDate, end: endDate });
-  const first352Days = allDaysOfYear.slice(0, 352);
-  const groupedDays = [];
-  for (let i = 0; i < first352Days.length; i += 16) {
-    groupedDays.push(first352Days.slice(i, i + 16));
+  const { groupedDays } = calculateYearDays(params.anoId);
+
+  function isCurrentDate(day) {
+    return (
+      day.getDate() === today.getDate() &&
+      day.getMonth() === today.getMonth() &&
+      day.getFullYear() === today.getFullYear()
+    );
   }
-  const leapYear = isLeapYear(startDate);
-  const restOfTheYear = leapYear ? allDaysOfYear.slice(352, 366) : allDaysOfYear.slice(352, 365);
+
+  // Cálculo del día solar
+  function calculateSolarDay(day) {
+    const startFirstDate = new Date(1, 0, 1); // Año 1, mes 0 (enero), día 1
+    const differenceInMillisecs = day.getTime() - startFirstDate.getTime();
+    const daysDifference = Math.floor(differenceInMillisecs / (1000 * 60 * 60 * 24));
+    return daysDifference + 1;
+  }
 
   // Estas variables las hago para pasarlas al header
   const totalIds = groupedDays.length;
@@ -28,30 +35,6 @@ export default function VueltaItemPage({ params }) {
   }
   const prevLink = `/${params.aparatoId}/${params.anoId}/${prevId}`
   const nextLink = `/${params.aparatoId}/${params.anoId}/${nextId}`
-
-  const currentDate = new Date();
-  // Función para verificar si un día es el día actual
-  function isCurrentDate(day) {
-    return (
-      day.getDate() === currentDate.getDate() &&
-      day.getMonth() === currentDate.getMonth() &&
-      day.getFullYear() === currentDate.getFullYear()
-    );
-  }
-
-  function calculateSolarDay(day) {
-    // Fecha del primer día del primer año de todos los tiempos
-    const startFirstDate = new Date(1, 0, 1); // Año 1, mes 0 (enero), día 1
-  
-    // Calcula la diferencia en milisegundos
-    const differenceInMillisecs = day.getTime() - startFirstDate.getTime();
-  
-    // Convierte la diferencia en días
-    const daysDifference = Math.floor(differenceInMillisecs / (1000 * 60 * 60 * 24));
-  
-    // Añade 1 porque queremos contar desde el día 1
-    return daysDifference + 1;
-  }
 
   return (
     <>

@@ -7,11 +7,9 @@
   --background-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-rgb: 0, 0, 0;
-  }
+.dark-mode {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 0, 0, 0;
 }
 
 /****************************************** 
@@ -33,7 +31,7 @@ th{
 }
 
 .nav-links .link{
-  @apply text-sm
+  @apply text-xs uppercase text-right
 }
 .nav-links .link.active{
   @apply underline
@@ -46,6 +44,39 @@ th{
 }
 .svg-icon path{
   @apply stroke-primary
+}
+
+/****************************************** 
+Home
+*******************************************/
+.card{
+  @apply text-center;
+}
+.card .h-title{
+  @apply text-2xl
+}
+@media (min-width: 768px) {
+  .section-full-height{
+    height: calc(100vh - 160px);
+  }
+}
+.icon-aparato{
+  @apply grid grid-cols-2 aspect-square mb-6
+}
+.icon-aparato div{
+  @apply border -ml-[1px] -mb-[1px]
+}
+.icon-ano{
+  @apply grid grid-cols-2 aspect-square mb-6
+}
+.icon-ano div{
+  @apply border -ml-[1px] -mb-[1px]
+}
+.icon-vuelta{
+  @apply grid grid-cols-8 aspect-square mb-6
+}
+.icon-vuelta div{
+  @apply border -ml-[1px] -mb-[1px]
 }
 
 /****************************************** 

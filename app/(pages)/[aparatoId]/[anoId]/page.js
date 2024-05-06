@@ -1,40 +1,20 @@
 import { Header } from '@/app/ui/header.js';
-import { years } from "@/app/services/dates"
+import { years, today, calculateYearDays } from "@/app/services/dates"
 import Link from "next/link";
-import { startOfYear, endOfYear, eachDayOfInterval, isLeapYear, getDayOfYear } from 'date-fns';
-
-// guardar todos los días de un año ??
-// tomar los 352 primeros días del año y divirlos en grupos de 16 días.
-// guardar en otra variable el resto de los días del año (13 dias si es un año de 365 y 14 días si es año bisiesto)
+import { leapYear, getDayOfYear } from 'date-fns';
 
 export default function AnoItemPage({ params }) {
 
-
-  // Obtener el primer y último día del año
-  const startDate = startOfYear(new Date(parseInt(params.anoId), 0, 1));
-  const endDate = endOfYear(new Date(parseInt(params.anoId), 11, 31));
-  // Obtener todos los días del año
-  const allDaysOfYear = eachDayOfInterval({ start: startDate, end: endDate });
-  // Obtener los primeros 352 días del año
-  const first352Days = allDaysOfYear.slice(0, 352);
-  // Dividir los primeros 352 días en grupos de 16 días
-  const groupedDays = [];
-  for (let i = 0; i < first352Days.length; i += 16) {
-    groupedDays.push(first352Days.slice(i, i + 16));
-  }
-  // Obtener el resto de los días del año
-  const leapYear = isLeapYear(startDate);
-  const restOfTheYear = leapYear ? allDaysOfYear.slice(352, 366) : allDaysOfYear.slice(352, 365);
+  const { groupedDays, restOfTheYear } = calculateYearDays(params.anoId);
 
   // Función para verificar si un día es el día actual
-function isCurrentDate(day) {
-  const currentDate = new Date();
-  return (
-    day.getDate() === currentDate.getDate() &&
-    day.getMonth() === currentDate.getMonth() &&
-    day.getFullYear() === currentDate.getFullYear()
-  );
-}
+  function isCurrentDate(day) {
+    return (
+      day.getDate() === today.getDate() &&
+      day.getMonth() === today.getMonth() &&
+      day.getFullYear() === today.getFullYear()
+    );
+  }
 
   // Estas variables las hago para pasarlas al header
   const totalIds = years.length;
