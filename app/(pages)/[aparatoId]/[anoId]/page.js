@@ -5,7 +5,7 @@ import { leapYear, getDayOfYear } from 'date-fns';
 
 export default function AnoItemPage({ params }) {
 
-  const { groupedDays, restOfTheYear } = calculateYearDays(params.anoId);
+  const { groupedDays, restOfTheYear, leapYear } = calculateYearDays(params.anoId);
 
   // Función para verificar si un día es el día actual
   function isCurrentDate(day) {
