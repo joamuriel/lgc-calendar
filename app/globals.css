@@ -46,37 +46,64 @@ th{
   @apply stroke-primary
 }
 
+input[type=checkbox]{
+  @apply h-0 w-0 hidden
+}
+label {
+	text-indent: -9999px;
+  @apply cursor-pointer w-5 h-3 block rounded-full relative bg-foreground
+}
+label:after {
+	content: '';
+  @apply absolute top-0.5 left-0.5 w-2 h-2 bg-background rounded-full duration-300
+}
+input:checked + label {
+  @apply bg-foreground
+}
+input:checked + label:after {
+	left: calc(100% - 0.125rem);
+	transform: translateX(-100%);
+}
+label:active:after {
+  @apply w-3
+}
 /****************************************** 
 Home
 *******************************************/
-.card{
-  @apply text-center;
-}
-.card .h-title{
-  @apply text-2xl
-}
 @media (min-width: 768px) {
   .section-full-height{
     height: calc(100vh - 160px);
   }
 }
+.card{
+  @apply text-center;
+}
+.card .h-title{
+  @apply text-lg md:text-2xl
+}
+.card .icon{
+  @apply aspect-square mb-3 md:mb-6
+}
 .icon-aparato{
-  @apply grid grid-cols-2 aspect-square mb-6
+  @apply grid grid-cols-2
 }
 .icon-aparato div{
   @apply border -ml-[1px] -mb-[1px]
 }
 .icon-ano{
-  @apply grid grid-cols-2 aspect-square mb-6
+  @apply grid grid-cols-2
 }
 .icon-ano div{
   @apply border -ml-[1px] -mb-[1px]
 }
 .icon-vuelta{
-  @apply grid grid-cols-8 aspect-square mb-6
+  @apply grid grid-cols-8
 }
 .icon-vuelta div{
   @apply border -ml-[1px] -mb-[1px]
+}
+.card:hover .icon div{
+  @apply bg-foreground border-background
 }
 
 /****************************************** 
@@ -141,7 +168,7 @@ seccion año
 seccion vuelta
 *******************************************/
 .vuelta .cuadrante{
-  @apply border p-6 justify-center items-center flex flex-col relative -ml-[1px] -mb-[1px]
+  @apply border p-9 justify-center items-center flex flex-col relative -ml-[1px] -mb-[1px] relative
 }
 .vuelta .cuadrante .day-group{
   @apply flex w-full

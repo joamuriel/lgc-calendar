@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "./switch";
 export function Footer() {
   return (
     <>
-      <footer className="flex px-3 pt-12 justify-between">
+      <footer className="flex flex-col md:flex-row px-3 pt-12 justify-between">
         <div>
           <ThemeSwitcher />
         </div>
