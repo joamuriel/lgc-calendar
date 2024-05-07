@@ -14,7 +14,7 @@ export default function Home() {
           <p>Vuelta <span className='font-semibold'>{currentVuelta}</span></p>
           <p>Día <span className='font-semibold'>{currentDay} ({currentDayNegative})</span></p>
         </div> */}
-        <div className='md:absolute left-0 top-0 h-full w-full justify-center items-center md:flex mt-12'>
+        <div className='md:absolute left-0 top-0 h-full w-full justify-center items-center md:flex mt-12 md:mt-6'>
           <div className='grid grid-cols-3 gap-9 md:gap-24 md:w-1/2 mx-auto'>
             <Link href={`/${currentAparato}`} className='card'>
               <div className='icon icon-aparato'>

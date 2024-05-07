@@ -82,7 +82,7 @@ Home
   @apply text-lg md:text-2xl
 }
 .card .icon{
-  @apply aspect-square mb-3 md:mb-6
+  @apply aspect-square mb-3 md:mb-6 w-full
 }
 .icon-aparato{
   @apply grid grid-cols-2
