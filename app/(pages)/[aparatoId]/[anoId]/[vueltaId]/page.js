@@ -1,6 +1,6 @@
 import { Header } from '@/app/ui/header.js';
 import { startOfYear, endOfYear, eachDayOfInterval, isLeapYear } from 'date-fns';
-import { today, calculateYearDays } from "@/app/services/dates"
+import { today, calculateYearDays, calculateSolarDay } from "@/app/services/dates"
 import Link from "next/link";
 
 export default function VueltaItemPage({ params }) {
@@ -14,14 +14,7 @@ export default function VueltaItemPage({ params }) {
       day.getFullYear() === today.getFullYear()
     );
   }
-
-  // Cálculo del día solar
-  function calculateSolarDay(day) {
-    const startFirstDate = new Date(1, 0, 1); // Año 1, mes 0 (enero), día 1
-    const differenceInMillisecs = day.getTime() - startFirstDate.getTime();
-    const daysDifference = Math.floor(differenceInMillisecs / (1000 * 60 * 60 * 24));
-    return daysDifference + 1;
-  }
+  
 
   // Estas variables las hago para pasarlas al header
   const totalIds = groupedDays.length;
