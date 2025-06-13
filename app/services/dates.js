@@ -66,26 +66,28 @@ const currentDay = getDayOfYear(today)
 const currentDayNegative = currentDay - (leapYear ? 366 : 365) + 1
 
 
+// Función para calcular día solar desde el año 0 (ajustada para coincidir con Ale)
 function calculateSolarDay(day) {
   const year = day.getFullYear();
-  const month = day.getMonth();
-  const date = day.getDate();
-
-  // Convertimos el año a días considerando los años bisiestos.
-  let days = (year - 1) * 365;
-  days += Math.floor((year - 1) / 4);  // Años bisiestos hasta el año actual (excluyendo el año 1)
-
-  // A los años, le sumamos los días del año actual hasta la fecha indicada.
-  const daysInMonths = [31, (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-  for (let i = 0; i < month; i++) {
-      days += daysInMonths[i];
+  
+  // Calcular días desde el año 0 hasta el año anterior
+  let totalDays = 0;
+  
+  for (let y = 0; y < year; y++) {
+    if (isLeapYear(new Date(y, 0, 1))) {
+      totalDays += 366;
+    } else {
+      totalDays += 365;
+    }
   }
-
-  // Sumamos el día actual
-  // days += date;
-
-  return days;
+  
+  // Sumar los días del año actual hasta la fecha indicada
+  totalDays += getDayOfYear(day);
+  
+  // Ajuste para coincidir con el cálculo de Ale (restar 363 días)
+  totalDays -= 363;
+  
+  return totalDays;
 }
 
 // Ejemplo de uso:
