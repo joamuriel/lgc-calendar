@@ -8,7 +8,7 @@ export function Footer() {
         <div>
           <ThemeSwitcher />
         </div>
-        <h6 className="text-xxs">Desarrollado por <Link className="underline" target="_blank" href='https://joamuriel.com/'>Joa</Link></h6>
+        <h6 className="text-xxs">Desarrollado por <Link className="underline" target="_blank" href='https://ux.joamuriel.com/'>Estudio UX</Link></h6>
       </footer>
     </>
   )
