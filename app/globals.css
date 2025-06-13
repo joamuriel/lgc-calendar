@@ -7,17 +7,59 @@
   --background-rgb: 255, 255, 255;
 }
 
-.dark-mode {
+/* Modo oscuro por defecto del sistema */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-mode) {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 0, 0, 0;
+  }
+}
+
+/* Variables CSS dinámicas según el tema */
+html.dark-mode {
   --foreground-rgb: 255, 255, 255;
   --background-rgb: 0, 0, 0;
+  color-scheme: dark;
+}
+
+html.light-mode {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+  color-scheme: light;
+}
+
+/* Aplicar colores usando las variables */
+html.dark-mode,
+html.dark-mode body {
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+html.light-mode,
+html.light-mode body {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+
+/* Aplicar tema por defecto al body para evitar flashes */
+body {
+  background-color: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb));
+  transition: none; /* Sin transición para evitar flashes */
+}
+
+/* Solo asegurar que .today mantenga su estado */
+html.dark-mode .cuadrante.today,
+html.light-mode .cuadrante.today {
+  background-color: rgb(var(--foreground-rgb));
+  color: rgb(var(--background-rgb));
+  border-color: rgb(var(--foreground-rgb));
 }
 
 /****************************************** 
 Estilos generales 
 *******************************************/
-body {
-  @apply bg-background text-foreground
-}
+/* Los estilos de body ya están definidos arriba */
 
 *{
   border-color: rgb(var(--foreground-rgb));
@@ -49,23 +91,29 @@ th{
 input[type=checkbox]{
   @apply h-0 w-0 hidden
 }
-label {
+.theme-switcher label {
 	text-indent: -9999px;
   @apply cursor-pointer w-5 h-3 block rounded-full relative bg-foreground
 }
-label:after {
+.theme-switcher label:after {
 	content: '';
   @apply absolute top-0.5 left-0.5 w-2 h-2 bg-background rounded-full duration-300
 }
-input:checked + label {
+.theme-switcher input:checked + label {
   @apply bg-foreground
 }
-input:checked + label:after {
+.theme-switcher input:checked + label:after {
 	left: calc(100% - 0.125rem);
 	transform: translateX(-100%);
 }
-label:active:after {
+.theme-switcher label:active:after {
   @apply w-3
+}
+
+/* Clases de accesibilidad */
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
 }
 /****************************************** 
 Home
@@ -122,6 +170,12 @@ seccion año
 .ano .cuadrante{
   @apply border p-3 justify-center items-center flex flex-col relative -ml-[1px] -mb-[1px]
 }
+.table {
+  @apply w-full overflow-x-auto;
+}
+.table table {
+  @apply w-full min-w-full;
+}
 .table td{
   @apply border
 }
@@ -135,21 +189,21 @@ seccion año
 }
 .table .day .id,
 .firering .day .id{
-  @apply font-bold
+  @apply font-bold text-xs md:text-sm
 }
 .table .day .date,
 .firering .day .date{
-  @apply text-xs text-center
+  @apply text-xxs md:text-xs text-center
 }
 .table .day .negative,
 .firering .day .negative{
-  @apply text-sm
+  @apply text-xs md:text-sm
 }
 .table .th-vuelta{
-  @apply text-center text-xs w-12
+  @apply text-center text-xxs md:text-xs w-8 md:w-12 p-1
 }
 .table .th{
-  @apply bg-foreground text-background border text-xs md:text-base 
+  @apply bg-foreground text-background border text-xxs md:text-base p-1 md:p-2
 }
 .firering{
   @apply flex flex-wrap;

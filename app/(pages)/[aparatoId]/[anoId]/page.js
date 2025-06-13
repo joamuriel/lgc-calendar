@@ -1,11 +1,46 @@
 import { Header } from '@/app/ui/header.js';
 import { years, today, calculateYearDays } from "@/app/services/dates"
 import Link from "next/link";
-import { leapYear, getDayOfYear } from 'date-fns';
+import { getDayOfYear } from 'date-fns';
+
+export async function generateMetadata({ params }) {
+  const anoId = parseInt(params.anoId);
+  const aparatoId = parseInt(params.aparatoId);
+  
+  if (isNaN(anoId) || anoId < 1 || anoId > 3000) {
+    return {
+      title: 'Año no encontrado - Calendaria',
+      description: 'El año solicitado no es válido.'
+    };
+  }
+  
+  return {
+    title: `Año ${anoId} - Calendaria`,
+    description: `Explora el año ${anoId} del calendario LGC, organizado en 22 vueltas y cuadrantes temáticos.`,
+    openGraph: {
+      title: `Año ${anoId} - Calendaria`,
+      description: `Calendario LGC para el año ${anoId} con sus 22 vueltas y organización por cuadrantes`,
+    }
+  };
+}
 
 export default function AnoItemPage({ params }) {
+  // Validar parámetros
+  const anoId = parseInt(params.anoId);
+  const aparatoId = parseInt(params.aparatoId);
+  
+  // Validación de límites
+  if (isNaN(anoId) || anoId < 1 || anoId > 3000) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold mb-4">Año no encontrado</h1>
+        <p className="mb-4">El año {params.anoId} no es válido (rango: 1-3000).</p>
+        <Link href={`/${aparatoId}`} className="underline">Volver al aparato</Link>
+      </div>
+    );
+  }
 
-  const { groupedDays, restOfTheYear, leapYear } = calculateYearDays(params.anoId);
+  const { groupedDays, restOfTheYear, leapYear } = calculateYearDays(anoId);
 
   // Función para verificar si un día es el día actual
   function isCurrentDate(day) {
@@ -16,22 +51,16 @@ export default function AnoItemPage({ params }) {
     );
   }
 
-  // Estas variables las hago para pasarlas al header
+  // Navegación con validación
   const totalIds = years.length;
-  let prevId = parseInt(params.anoId) - 1;
-  let nextId = parseInt(params.anoId) + 1;
-  if (prevId === 0) {
-    prevId = totalIds;
-  }
-  if (nextId > totalIds) {
-    nextId = 1;
-  }
+  const prevId = anoId === 1 ? 3000 : anoId - 1;
+  const nextId = anoId === 3000 ? 1 : anoId + 1;
   const prevLink = `/${params.aparatoId}/${prevId}`
   const nextLink = `/${params.aparatoId}/${nextId}`
 
   return(
     <>
-    <Header title="Año" navigation={params.anoId} prev={prevLink} next={nextLink} />
+    <Header title="Año" navigation={anoId} prev={prevLink} next={nextLink} />
     <div className='gap-0 md:grid grid-cols-2 w-full ano mt-12'>
       {/* Cuadrante NO */}
       <div className='cuadrante'>
